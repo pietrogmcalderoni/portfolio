@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ── SEO & Open Graph Tags ── -->
+<title>Pietro G. M. Calderoni — Management Engineering</title>
+<meta name="description" content="Portfolio di Pietro G. M. Calderoni, studente di Ingegneria Gestionale con specializzazione IT. Analisi dati, automazione processi e leadership.">
+<meta property="og:title" content="Pietro G. M. Calderoni — Management Engineering">
+<meta property="og:description" content="Portfolio personale: ecosistemi tech, ottimizzazione processi e approccio Human-in-the-Loop.">
+<meta property="og:type" content="website">
+<!-- Sostituisci questo link con l'URL assoluto della tua foto o di uno screenshot del sito per l'anteprima link -->
+<meta property="og:image" content="https://iltuodominio.it/IMG_2718.jpg"> 
+
+<!-- Aggiunta della Favicon (il quadratino nella scheda del browser) -->
+<link rel="icon" type="image/png" href="favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens ─────────────────────────────────────────── */
+  :root {
+    --terra:   #D49A47; 
+    --terra-l: #F9F1E6;
+    --terra-d: #B37D33;
+    --ink:     #2A4B3C; 
+    --ink-2:   #345948;
+    --ivory:   #F8F1E4; 
+    --ivory-2: #EDE5D5; 
+    --stone:   #738574;
+    --stone-l: #9EAD9B; 
+    --forest:  #2A4B3C;
+    --border:  #E4DACD; 
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  /* ── Reset & Accessibilità ───────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: var(--font-body);
+    background: var(--ivory);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; 
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* Focus states per accessibilità da tastiera */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--terra);
+    outline-offset: 4px;
+  }
+
+  /* ── Custom Cursor ──────────────────────────────────── */
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--terra);
+    border-radius: 50%;
+    pointer-events: none; /* Fondamentale: non blocca i click */
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  /* ── Nav & Mobile Menu ───────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248, 241, 228, 0.88); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .nav-logo.visible { opacity: 1; }
+  .nav-logo span { color: var(--terra); }
+  
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--stone);
+    transition: color 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .nav-links a:hover { color: var(--terra); }
+  
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
+  .nav-cta {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 18px;
+    border: 1px solid var(--terra);
+    border-radius: 2px;
+    color: var(--terra);
+    letter-spacing: 0.04em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--terra); color: #fff; }
+  
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101; /* Sopra il menu mobile */
+  }
+  
+  .mobile-menu {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--ivory);
+    z-index: 90; /* Sotto la nav ma sopra il sito */
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    opacity: 0; pointer-events: none; 
+    transform: translateY(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .mobile-menu.active { 
+    opacity: 1; 
+    pointer-events: auto; 
+    transform: translateY(0);
+  }
+  .mobile-menu a { 
+    font-family: var(--font-display);
+    font-size: 2rem; 
+    color: var(--ink); 
+    font-weight: 500; 
+  }
+  .mobile-menu a:hover { color: var(--terra); }
+
+  /* ── Hero ────────────────────────────────────────────── */
+  #hero {
+    background: var(--ink);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 60px;
+  }
+  .hero-left {
+    padding: 10vh 5vw 8vh 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s ease forwards;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 500;
+    color: var(--ivory);
+    line-height: 1.08;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--terra);
+  }
+  .hero-desc {
+    font-size: 15px;
+    color: var(--stone-l);
+    line-height: 1.75;
+    max-width: 420px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s ease forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s ease forwards;
+  }
+  .btn-primary {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 12px 28px;
+    background: var(--terra);
+    color: #fff;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--terra-d); transform: translateY(-1px); }
+  .btn-ghost {
+    font-size: 13px;
+    color: var(--stone-l);
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ivory); }
+  .btn-ghost svg { transition: transform 0.2s; }
+  .btn-ghost:hover svg { transform: translateY(2px); } /* Download arrow goes down */
+
+  .hero-right {
+    border-left: 0.5px solid rgba(255,255,255,0.06);
+    padding: 10vh 5vw 8vh 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    gap: 0;
+    opacity: 0;
+    animation: fadeIn 1s 0.8s ease forwards;
+  }
+  .hero-right-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 500;
+    color: var(--ivory);
+    margin-bottom: 24px;
+    line-height: 1.08;
+  }
+  .hero-right-name em {
+    color: var(--terra);
+    font-style: italic;
+  }
+  .hero-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) sepia(15%);
+    transition: filter 0.4s, transform 0.6s;
+  }
+  .hero-image-wrapper:hover .hero-img {
+    filter: grayscale(0) sepia(0);
+    transform: scale(1.03);
+  }
+  
+  .hero-scroll {
+    margin-top: 40px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+  .scroll-line {
+    width: 40px; height: 0.5px;
+    background: rgba(255,255,255,0.15);
+    animation: scrollPulse 2s infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+  }
+
+  /* ── Sections ────────────────────────────────────────── */
+  section { padding: 100px 5vw; }
+  .section-header { margin-bottom: 60px; }
+  .section-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--stone); }
+
+  /* ── About ───────────────────────────────────────────── */
+  #about { background: var(--ivory); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 16px;
+    color: var(--stone);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .about-text p strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .about-text .highlight {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--ink);
+    border-left: 2px solid var(--terra);
+    padding-left: 20px;
+    margin: 32px 0;
+    line-height: 1.5;
+  }
+  .about-aside {
+    padding-top: 8px;
+  }
+
+  /* Circular Stats */
+  .circular-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+    margin-bottom: 32px;
+  }
+  .circle-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .circle-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 16px;
+  }
+  .circle-wrapper svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .circle-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+  }
+  .circle-progress {
+    fill: none;
+    stroke: var(--terra);
+    stroke-width: 4;
+    stroke-dasharray: 290;
+    stroke-dashoffset: 290;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .circle-inner {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .circle-inner .circle-num {
+    font-variant-numeric: tabular-nums;
+  }
+  .circle-label {
+    font-size: 11px;
+    color: var(--stone);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+
+  .aside-card {
+    background: var(--ivory-2);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .aside-card-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 14px;
+  }
+  .lang-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 14px;
+  }
+  .lang-row:last-child { border-bottom: none; }
+  .lang-row .lang-name { color: var(--ink); font-weight: 500; }
+  .lang-row .lang-level {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--ivory);
+    border: 0.5px solid var(--border);
+    color: var(--stone);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Experience ──────────────────────────────────────── */
+  #experience { background: var(--ink); }
+  #experience .section-title { color: var(--ivory); }
+  #experience .section-title em { color: var(--stone-l); }
+  #experience .section-num { color: var(--terra); }
+
+  .exp-entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    padding: 0 0 80px 0;
+    position: relative;
+  }
+  .exp-entry:last-child {
+    padding-bottom: 0;
+  }
+  .exp-entry::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    bottom: -80px;
+    left: 230px;
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+    z-index: 1;
+  }
+  .exp-entry:last-child::before {
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+  }
+  .exp-entry::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 225px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 2px solid var(--terra);
+    box-shadow: 0 0 0 8px var(--ink);
+    z-index: 2;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .exp-entry:hover::after {
+    background: var(--terra);
+    transform: scale(1.2);
+  }
+  .exp-period {
+    font-size: 12px;
+    color: var(--stone-l);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .exp-org {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ivory);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .exp-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 0.5px solid var(--terra);
+    color: var(--terra);
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+  .exp-role {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 20px;
+  }
+  .exp-desc {
+    font-size: 15px;
+    color: var(--stone-l);
+    line-height: 1.75;
+    margin-bottom: 28px;
+    max-width: 640px;
+  }
+  .exp-items { list-style: none; }
+  .exp-items li {
+    font-size: 14px;
+    color: rgba(158, 173, 155, 0.8);
+    padding: 10px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.05);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    line-height: 1.6;
+  }
+  .exp-items li:last-child { border-bottom: none; }
+  .exp-items li strong {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .exp-image-gallery {
+    margin-top: 32px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    aspect-ratio: 1600 / 1200;
+  }
+  .exp-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: opacity 0.4s, transform 0.6s;
+  }
+  .exp-image-gallery:hover .exp-img {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  .achievement-bar {
+    margin-top: 28px;
+    background: rgba(212, 154, 71, 0.08);
+    border: 0.5px solid rgba(212, 154, 71, 0.25);
+    border-radius: 4px;
+    padding: 18px 22px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .achievement-icon {
+    color: var(--terra);
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .achievement-text {
+    font-size: 13px;
+    color: var(--stone-l);
+    line-height: 1.6;
+  }
+  .achievement-text strong { color: var(--terra); font-weight: 500; }
+
+  /* ── Skills ──────────────────────────────────────────── */
+  #skills { background: var(--ivory-2); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+  .skills-col {
+    background: var(--ivory);
+    padding: 48px 44px;
+  }
+  .skills-col-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 32px;
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .skill-item {
+    margin-bottom: 0;
+    padding: 16px 0;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .skill-item:last-child { border-bottom: none; }
+  .skill-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .skill-sub {
+    font-size: 12px;
+    color: var(--stone);
+    line-height: 1.5;
+  }
+  .skill-bar-wrap {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .skill-bar {
+    height: 100%;
+    background: var(--terra);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .skill-bar.visible { transform: scaleX(1); }
+
+  .soft-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .soft-card {
+    background: var(--ivory-2);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+  .soft-card-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--terra-l);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: var(--terra);
+    font-size: 16px;
+  }
+  .soft-card-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  /* ── Projects & Tech ─────────────────────────────────── */
+  #projects { background: var(--ivory); }
+  .proj-entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    padding: 0 0 80px 0;
+    position: relative;
+  }
+  .proj-entry:last-child {
+    padding-bottom: 0;
+  }
+  .proj-entry::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    bottom: -80px;
+    left: 230px;
+    width: 1px;
+    background: var(--border);
+    z-index: 1;
+  }
+  .proj-entry:last-child::before {
+    bottom: 0;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+  .proj-entry::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 225px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--ivory);
+    border: 2px solid var(--terra);
+    box-shadow: 0 0 0 8px var(--ivory);
+    z-index: 2;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .proj-entry:hover::after {
+    background: var(--terra);
+    transform: scale(1.2);
+  }
+  .proj-period {
+    font-size: 12px;
+    color: var(--stone);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .proj-org {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .proj-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 0.5px solid var(--terra);
+    color: var(--terra);
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+  .proj-role {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 20px;
+  }
+  .proj-desc {
+    font-size: 15px;
+    color: var(--stone);
+    line-height: 1.75;
+    margin-bottom: 28px;
+    max-width: 640px;
+  }
+  .proj-items { list-style: none; }
+  .proj-items li {
+    font-size: 14px;
+    color: var(--stone);
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    line-height: 1.6;
+  }
+  .proj-items li:last-child { border-bottom: none; }
+  .proj-items li strong {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  
+  /* Riquadro Attestato ALMA */
+  .cert-img-wrapper {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 2339 / 1654;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s;
+    margin-top: 2px;
+  }
+  .cert-img-wrapper:hover {
+    transform: scale(1.02);
+  }
+  .cert-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Componenti Visivi per i Progetti */
+  .prompt-box {
+    margin-top: 24px;
+    background: var(--ivory-2);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+  }
+  .prompt-header {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .prompt-code {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding-left: 16px;
+    border-left: 2px solid var(--terra);
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 12px;
+  }
+  /* Scrollbar personalizzata per il prompt */
+  .prompt-code::-webkit-scrollbar { width: 4px; }
+  .prompt-code::-webkit-scrollbar-track { background: var(--border); border-radius: 4px; }
+  .prompt-code::-webkit-scrollbar-thumb { background: var(--stone-l); border-radius: 4px; }
+  
+  .prompt-note {
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .ai-tools {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .ai-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 5px 12px;
+    background: var(--ivory);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    color: var(--ink);
+  }
+  .proj-image-gallery {
+    margin-top: 32px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+    aspect-ratio: 4 / 3;
+    background: #fff;
+  }
+  .proj-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 16px;
+    transition: transform 0.6s;
+  }
+  .proj-image-gallery:hover .proj-img {
+    transform: scale(1.02);
+  }
+  
+  /* CSS per il carosello/slider immagini */
+  .proj-slider-wrapper {
+    position: relative;
+    margin-top: 32px;
+    border-radius: 4px;
+    border: 0.5px solid var(--border);
+    overflow: hidden;
+    background: #fff;
+    aspect-ratio: 4 / 3;
+  }
+  .proj-slider-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+  }
+  .proj-slider-track::-webkit-scrollbar {
+    display: none; 
+  }
+  .proj-slider-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    overflow: hidden;
+  }
+  .proj-slider-slide .proj-img {
+    transition: transform 0.6s;
+  }
+  .proj-slider-slide:hover .proj-img {
+    transform: scale(1.02);
+  }
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(248, 241, 228, 0.9);
+    border: 0.5px solid var(--border);
+    color: var(--ink);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+  }
+  .slider-arrow:hover {
+    background: var(--terra);
+    color: #fff;
+  }
+  .slider-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .slider-arrow.prev { left: 16px; }
+  .slider-arrow.next { right: 16px; }
+
+  /* ── Chinéo Report (Estratto e Accordion) ────────────────────────── */
+  .chineo-report {
+    margin-top: 32px;
+    background: #fff;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .chineo-report.expandable {
+    cursor: pointer;
+  }
+  .chineo-report-header {
+    background: var(--ivory-2);
+    padding: 12px 24px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .chineo-expand-icon {
+    transition: transform 0.4s ease;
+  }
+  .chineo-report.expanded .chineo-expand-icon {
+    transform: rotate(180deg);
+  }
+  .chineo-report-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease-out;
+  }
+  .chineo-report.expanded .chineo-report-content {
+    grid-template-rows: 1fr;
+  }
+  .chineo-report-inner {
+    overflow: hidden;
+  }
+  .chineo-report-body {
+    padding: 24px;
+  }
+  .chineo-ps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 0.5px dashed var(--border);
+  }
+  .chineo-label {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .chineo-text {
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.6;
+  }
+  .chineo-diagrams {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .diagram-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-l);
+    margin-bottom: 12px;
+  }
+  /* Griglia SWOT CSS */
+  .swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+  }
+  .swot-cell {
+    background: #fff;
+    padding: 16px;
+  }
+  .swot-letter {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--terra);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .swot-cell-text {
+    font-size: 11px;
+    color: var(--stone);
+    line-height: 1.4;
+  }
+  .swot-cell-text ul, .lc-content ul {
+    padding-left: 14px;
+    margin-top: 6px;
+    list-style-type: disc;
+  }
+  .swot-cell-text li, .lc-content li {
+    margin-bottom: 4px;
+  }
+  
+  /* Griglia Lean Canvas CSS */
+  .lean-canvas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 4px 4px 0 0;
+  }
+  .lc-box { background: #fff; padding: 12px; }
+  .lc-title { font-weight: 500; font-size: 10px; text-transform: uppercase; color: var(--ink); margin-bottom: 6px; }
+  .lc-content { font-size: 10px; color: var(--stone); line-height: 1.3; }
+  .lc-tall { grid-row: 1 / span 2; }
+  .lean-canvas-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* ── Education ───────────────────────────────────────── */
+  #education { background: var(--ivory-2); }
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .edu-card {
+    background: var(--ivory);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: var(--terra); }
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--terra);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .edu-card:hover::before { opacity: 1; }
+  .edu-period {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 14px;
+  }
+  .edu-degree {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .edu-spec {
+    font-size: 13px;
+    color: var(--terra);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .edu-inst {
+    font-size: 13px;
+    color: var(--stone);
+  }
+  .edu-card.expandable {
+    cursor: pointer;
+  }
+  .edu-expand-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-top: 24px;
+  }
+  .edu-expand-toggle svg {
+    transition: transform 0.4s ease;
+  }
+  .edu-card.expanded .edu-expand-toggle svg {
+    transform: rotate(180deg);
+  }
+  .edu-exams {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease-out;
+  }
+  .edu-card.expanded .edu-exams {
+    grid-template-rows: 1fr;
+  }
+  .edu-exams-inner {
+    overflow: hidden;
+  }
+  .edu-exams-content {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 0.5px solid var(--border);
+  }
+  .edu-year-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 20px 0 10px 0;
+  }
+  .edu-year-title:first-child {
+    margin-top: 0;
+  }
+  .edu-exams-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .edu-exams-list li {
+    font-size: 13px;
+    color: var(--stone);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+  }
+  .edu-exams-list li::before {
+    content: '→';
+    color: var(--terra);
+    font-size: 13px;
+    margin-top: 1px;
+  }
+
+  /* ── Travel ──────────────────────────────────────────── */
+  #travel { background: var(--ivory); }
+  
+  /* Animazione "Aereo Svelatore" */
+  .travel-reveal-container {
+    position: relative;
+    padding: 10px 0;
+  }
+  .travel-path-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    border-top: 2px dashed var(--terra);
+    opacity: 0.3;
+    z-index: 5;
+    pointer-events: none;
+    transition: opacity 1s ease 0.4s;
+  }
+  .travel-reveal-container.visible .travel-path-line {
+    opacity: 0;
+  }
+  
+  .travel-curtain {
+    position: absolute;
+    top: -20px; bottom: -20px; left: 0; width: 105%;
+    background: var(--ivory);
+    z-index: 10;
+    transform: translateX(0);
+    transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.4s;
+    box-shadow: -40px 0 40px var(--ivory);
+    pointer-events: none;
+  }
+  .travel-reveal-container.visible .travel-curtain {
+    transform: translateX(105%);
+  }
+  
+  /* Aereo Gigante */
+  .airplane-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    color: var(--terra);
+    animation: flyFloat 3s ease-in-out infinite;
+    z-index: 11;
+  }
+  .airplane-wrapper svg {
+    filter: drop-shadow(-24px 32px 16px rgba(0,0,0,0.15));
+  }
+  @keyframes flyFloat {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, calc(-50% - 20px)); }
+  }
+
+  .travel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .travel-col {
+    background: var(--ivory-2);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  .travel-col-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .travel-col-title svg {
+    color: var(--terra);
+    width: 24px;
+    height: 24px;
+  }
+  .travel-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .travel-item {
+    font-size: 15px;
+    color: var(--stone);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .travel-flag {
+    font-size: 18px;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+  }
+
+  /* ── Contact ─────────────────────────────────────────── */
+  #contact {
+    background: var(--ink-2);
+    text-align: center;
+    padding: 100px 5vw 80px;
+  }
+  #contact .section-num { color: var(--terra); }
+  #contact .section-title { color: var(--ivory); }
+  .contact-sub {
+    font-size: 16px;
+    color: var(--stone-l);
+    max-width: 480px;
+    margin: 20px auto 52px;
+    line-height: 1.7;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 26px;
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 2px;
+    color: var(--stone-l);
+    letter-spacing: 0.04em;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .contact-link:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+    background: rgba(212, 154, 71, 0.06);
+  }
+  .contact-link.primary {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: #fff;
+  }
+  .contact-link.primary:hover {
+    background: var(--terra-d);
+    border-color: var(--terra-d);
+    color: #fff;
+  }
+  .contact-link svg { flex-shrink: 0; }
+
+  /* ── Footer ──────────────────────────────────────────── */
+  footer {
+    background: var(--ink);
+    padding: 24px 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+  }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.2); text-align: center; }
+
+  /* ── Animations ──────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── Mobile ──────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding-bottom: 40px; }
+    .hero-right { 
+      display: flex; 
+      border-left: none; 
+      padding-top: 0; 
+      padding-bottom: 80px; 
+    }
+    .hero-scroll { margin-top: 40px; position: static; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .exp-entry, .proj-entry { 
+      grid-template-columns: 1fr; 
+      gap: 20px; 
+      padding-left: 28px;
+      padding-bottom: 60px;
+    }
+    .exp-entry::before, .proj-entry::before {
+      left: 0px;
+      bottom: -60px;
+    }
+    .exp-entry::after, .proj-entry::after {
+      left: -5px;
+    }
+    
+    /* Adattamento estratti Chineo per Mobile */
+    .chineo-ps-grid { grid-template-columns: 1fr; gap: 16px; }
+    .swot-grid { grid-template-columns: 1fr; }
+    .lean-canvas { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .lc-tall { grid-row: auto; }
+    .lean-canvas-bottom { grid-template-columns: 1fr; }
+
+    .skills-grid { grid-template-columns: 1fr; }
+    .soft-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .travel-grid { grid-template-columns: 1fr; gap: 24px; }
+    .travel-col { padding: 32px 24px; }
+    .travel-list { grid-template-columns: 1fr; }
+    
+    /* Nascondi voci menu per mostrare hamburger */
+    .nav-links { display: none; }
+    .nav-cta.desktop-only { display: none; }
+    .hamburger { display: block; }
+    
+    footer { flex-direction: column; gap: 10px; }
+  }
+
+  /* ── Accessibilità: rispetta le preferenze di movimento ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .hero-eyebrow, .hero-title, .hero-desc, .hero-actions, .hero-right {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .scroll-line { animation: none !important; }
+    .airplane-wrapper { animation: none !important; }
+    .skill-bar { transform: scaleX(1) !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursor"></div>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-logo" id="nav-logo">PIETRO CALDERONI</div>
+  
+  <div class="nav-links">
+    <a href="#about">Chi sono</a>
+    <a href="#experience">Esperienza</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Progetti</a>
+    <a href="#education">Formazione</a>
+    <a href="#travel">Viaggi</a>
+    <a href="#contact">Contatti</a>
+  </div>
+  
+  <div class="nav-actions">
+    <a href="mailto:pietrogmcalderoni@gmail.com" class="nav-cta desktop-only">Scrivimi</a>
+    
+    <!-- Pulsante Menu Hamburger Mobile -->
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h16M4 12h16M4 17h16" class="menu-icon-lines"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Menu Mobile a Tendina Full-Screen -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about">Chi sono</a>
+  <a href="#experience">Esperienza</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Progetti</a>
+  <a href="#education">Formazione</a>
+  <a href="#travel">Viaggi</a>
+  <a href="#contact">Contatti</a>
+  <a href="Pietro_Calderoni_CV_portfolio.pdf" download style="color: var(--terra); margin-top: 16px;">Scarica CV</a>
+</div>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Management Engineering · IT & Operations · Firenze</div>
+    <h1 class="hero-title">
+      Imparo da ogni sistema.<br>Poi cerco come <em>migliorarlo</em>.
+    </h1>
+    <p class="hero-desc">
+      Studente di Ingegneria Gestionale con specializzazione IT. Combino analisi dei dati, automazione dei processi e leadership empatica per risolvere sfide operative complesse.
+    </p>
+    <div class="hero-actions">
+      <a href="#experience" class="btn-primary">Vedi il mio percorso</a>
+      
+      <!-- Pulsante Scarica CV -->
+      <a href="Pietro_Calderoni_CV_portfolio.pdf" class="btn-ghost" download>
+        Scarica CV
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2v9m0 0l-3-3m3 3l3-3m-8 5h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <!-- Pulsante GitHub Hero -->
+      <a href="https://github.com/piecalde" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+        GitHub
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      
+      <a href="#contact" class="btn-ghost">
+        Contattami
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-name" id="hero-name">Pietro <em>Calderoni</em></div>
+    <div class="hero-image-wrapper">
+      <img src="IMG_2718.jpg" alt="Pietro Calderoni Profilo" class="hero-img">
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scorri per scoprire
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-num">01 — Chi sono</div>
+    <h2 class="section-title">Ingegneria & <em>umanità</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        Sono uno studente di <strong>Ingegneria Gestionale con specializzazione IT</strong> all'Università di Firenze. La mia passione è usare la tecnologia non come fine, ma come strumento per ottimizzare processi reali e risolvere problemi complessi.
+      </p>
+      <blockquote class="highlight">
+        Combino pensiero analitico e leadership empatica — due approcci che sembrano opposti, ma che in realtà si potenziano a vicenda.
+      </blockquote>
+      <p>
+        Alla FacolCup ho progettato un <strong>sistema Google Drive strutturato</strong> e template di comunicazione automatizzati che hanno ridotto i tempi di processo del 60% — una soluzione ancora attiva all'interno dell'associazione. Ho coordinato un team di più di 20 persone in scenari ad alta pressione, gestendo relazioni istituzionali con il Comune di Firenze, la Regione Toscana e i Ministeri dello Sport, della Salute e dell'Università e della Ricerca.
+      </p>
+    </div>
+    <div class="about-aside reveal reveal-delay-2">
+      <div class="circular-stats-grid">
+        <div class="circle-stat">
+          <div class="circle-wrapper">
+            <svg viewBox="0 0 100 100">
+              <circle class="circle-bg" cx="50" cy="50" r="46"></circle>
+              <circle class="circle-progress" cx="50" cy="50" r="46" data-pct="80"></circle>
+            </svg>
+            <div class="circle-inner">
+              <span class="circle-num" data-val="20" data-prefix="" data-suffix="+">0</span>
+            </div>
+          </div>
+          <div class="circle-label">Persone coordinate<br>sul campo</div>
+        </div>
+        
+        <div class="circle-stat">
+          <div class="circle-wrapper">
+            <svg viewBox="0 0 100 100">
+              <circle class="circle-bg" cx="50" cy="50" r="46"></circle>
+              <circle class="circle-progress" cx="50" cy="50" r="46" data-pct="60"></circle>
+            </svg>
+            <div class="circle-inner">
+              <span class="circle-num" data-val="60" data-prefix="−" data-suffix="%">0</span>
+            </div>
+          </div>
+          <div class="circle-label">Riduzione<br>tempi di processo</div>
+        </div>
+
+        <div class="circle-stat">
+          <div class="circle-wrapper">
+            <svg viewBox="0 0 100 100">
+              <circle class="circle-bg" cx="50" cy="50" r="46"></circle>
+              <circle class="circle-progress" cx="50" cy="50" r="46" data-pct="90"></circle>
+            </svg>
+            <div class="circle-inner">
+              <span class="circle-num" data-val="1.5" data-prefix="" data-suffix="K">0</span>
+            </div>
+          </div>
+          <div class="circle-label">Spettatori<br>finali Viola Park</div>
+        </div>
+
+        <div class="circle-stat">
+          <div class="circle-wrapper">
+            <svg viewBox="0 0 100 100">
+              <circle class="circle-bg" cx="50" cy="50" r="46"></circle>
+              <circle class="circle-progress" cx="50" cy="50" r="46" data-pct="100"></circle>
+            </svg>
+            <div class="circle-inner">
+              <span class="circle-num" data-val="240" data-prefix="" data-suffix="+">0</span>
+            </div>
+          </div>
+          <div class="circle-label">Persone gestite<br>documentalmente</div>
+        </div>
+      </div>
+      <div class="aside-card">
+        <div class="aside-card-label">Lingue</div>
+        <div class="lang-row">
+          <span class="lang-name">Italiano</span>
+          <span class="lang-level">Madrelingua</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Inglese</span>
+          <span class="lang-level">B2 — CEFR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ── -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-num">02 — Esperienza</div>
+    <h2 class="section-title">Sul <em>campo</em></h2>
+  </div>
+
+  <div class="exp-entry reveal">
+    <div class="exp-meta">
+      <div class="exp-period">Set 2023 — Set 2025</div>
+      <div class="exp-org">FacolCup</div>
+      <div class="exp-badge">Torneo di calcio universitario</div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-role">Operations & Event Management Staff</div>
+      <p class="exp-desc">
+        Contribuito alla gestione ed esecuzione di un importante torneo di calcio a 11 tra le rappresentative delle facoltà dell'Università degli Sudi di Firenze, bilanciando gli studi accademici con esperienza di management in uno scenario altamente complesso.
+      </p>
+      <ul class="exp-items">
+        <li>
+          <strong>Team & Ops</strong>
+          Coordinamento operativo di un team di più di 20 persone. Gestione tecnica dei sistemi VAR sul campo e organizzazione delle finali ufficiali al Viola Park con circa 1.500 spettatori.
+        </li>
+        <li>
+          <strong>Documenti</strong>
+          Organizzazione e validazione della documentazione ufficiale per 8 squadre — procedure per oltre 240 persone, con piena conformità normativa.
+        </li>
+        <li>
+          <strong>Relazioni</strong>
+          Gestione di comunicazioni istituzionali (PEC) con stakeholder di alto livello: Comune di Firenze, Regione Toscana, Ministeri (Sport, Cultura, Università).
+        </li>
+        <li>
+          <strong>Processi</strong>
+          Riduzione dei tempi di processo del 60% tramite sistema Google Drive strutturato e template di comunicazione automatizzati, ancora in uso dall'organizzazione.
+        </li>
+      </ul>
+      <div class="exp-image-gallery">
+        <img src="b8aec0aa-d915-4dd8-a2b6-046118da7cc5.JPG" alt="Evento FacolCup" class="exp-img">
+      </div>
+      <div class="achievement-bar">
+        <div class="achievement-icon">◆</div>
+        <div class="achievement-text">
+          <strong>Riconoscimento ufficiale —</strong> Premiato dal Presidente dell'Associazione Enea De Vita sul palco del Salone dei Cinquecento di Palazzo Vecchio, alla presenza della Sindaca di Firenze Sara Funaro, per il contributo straordinario al successo dell'evento.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-entry reveal reveal-delay-1">
+    <div class="exp-meta">
+      <div class="exp-period">Giu 2021 — Set 2021</div>
+      <div class="exp-org">Museo Stibbert</div>
+      <div class="exp-badge">Campo Estivo</div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-role">Animatore & Staff Organizzativo</div>
+      <p class="exp-desc">
+        Supporto all'organizzazione e alla gestione quotidiana delle attività ludico-ricreative per bambini all'interno del giardino storico del museo.
+      </p>
+      <ul class="exp-items">
+        <li>
+          <strong>Gestione Gruppi</strong>
+          Coordinamento delle attività sportive e di intrattenimento per circa 50 bambini dai 7 ai 13 anni, mantenendo un'attenzione costante sulla loro sicurezza e inclusione.
+        </li>
+        <li>
+          <strong>Operatività</strong>
+          Gestione delle dinamiche quotidiane in un ambiente imprevedibile e all'aperto, supportando il team e curando la comunicazione con le famiglie.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ── -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-num">03 — Competenze</div>
+    <h2 class="section-title">Hard & <em>soft</em></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skills-col">
+      <div class="skills-col-label">Hard skills</div>
+      <div class="skill-item">
+        <div class="skill-name">Process Optimization & Mapping</div>
+        <div class="skill-sub">Analisi e ridisegno di workflow operativi</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Data Analysis</div>
+        <div class="skill-sub">Analisi dati per decision making</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Python · Java · SQL</div>
+        <div class="skill-sub">Programmazione e sviluppo — Eclipse IDE</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Microsoft Office Suite</div>
+        <div class="skill-sub">Word, Excel, PowerPoint, Canva</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">AI Tools</div>
+        <div class="skill-sub">Claude, ChatGPT, Copilot, Gemini, Perplexity, Grok — uso avanzato</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Comunicazioni istituzionali (PEC)</div>
+        <div class="skill-sub">Relazioni con enti pubblici e stakeholder</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+      </div>
+    </div>
+    <div class="skills-col">
+      <div class="skills-col-label">Soft skills</div>
+      <div class="soft-grid">
+        <div class="soft-card">
+          <div class="soft-card-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="soft-card-name">Leadership empatica &amp; Team Building</div>
+        </div>
+        <div class="soft-card">
+          <div class="soft-card-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h3l2-5 3 10 2-5h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="soft-card-name">Problem Solving sotto pressione</div>
+        </div>
+        <div class="soft-card">
+          <div class="soft-card-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+          </div>
+          <div class="soft-card-name">Cross-functional Teamwork</div>
+        </div>
+        <div class="soft-card">
+          <div class="soft-card-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="soft-card-name">Stakeholder Management</div>
+        </div>
+        <div class="soft-card">
+          <div class="soft-card-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L8 4l4 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 9.5h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="soft-card-name">Adattabilità &amp; Agilità</div>
+        </div>
+        <div class="soft-card">
+          <div class="soft-card-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="soft-card-name">Gestione del tempo &amp; priorità</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects & Tech ── -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-num">04 — Progetti & Tech</div>
+    <h2 class="section-title">Sviluppo & <em>innovazione</em></h2>
+  </div>
+
+  <div class="proj-entry reveal">
+    <div class="proj-meta">
+      <div class="proj-period">2026</div>
+      <div class="proj-org">AI Portfolio</div>
+      <div class="proj-badge">Web Development</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-role">Creator & Prompt Engineer</div>
+      <p class="proj-desc">
+        Progettazione e sviluppo interattivo di questo sito web adottando un approccio <em>Human-in-the-Loop</em>, in cui l'intuizione ingegneristica e il design editoriale hanno guidato attivamente la generazione del codice tramite modelli di Intelligenza Artificiale.
+      </p>
+      <ul class="proj-items">
+        <li>
+          <strong>Architettura</strong>
+          Definizione rigorosa della struttura informativa, della User Experience e dello stile visivo, partendo da zero senza l'ausilio di template pre-confezionati.
+        </li>
+        <li>
+          <strong>Prompting</strong>
+          Utilizzo di AI conversazionale per la scrittura iterativa di HTML, CSS e JavaScript puro, rifinendo i prompt per ottenere un codice semantico, leggero e responsivo.
+        </li>
+        <li>
+          <strong>Risultato</strong>
+          Sviluppo di un'interfaccia interattiva con animazioni basate sullo scorrimento e grafica vettoriale ottimizzata, unendo la visione strategica all'efficienza degli strumenti AI avanzati.
+        </li>
+      </ul>
+      <div class="prompt-box">
+        <div class="prompt-header">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          System Prompt & Workflow
+        </div>
+        <div class="prompt-code">
+          "Agisci come un Senior Front-End Developer e un Art Director esperto in UI/UX Design editoriale. Il tuo compito è scrivere il codice completo per un sito web portfolio personale per uno studente di "Ingegneria Gestionale con specializzazione IT". L'intero sito DEVE essere contenuto in un singolo file "index.html", comprendendo HTML semantico, CSS puro (niente framework come Tailwind o Bootstrap) e Vanilla JavaScript. L'obiettivo è trasmettere un equilibrio perfetto tra "Ingegneria & Umanità": un approccio analitico, misurabile e orientato ai processi, combinato con empatia, eleganza e leadership. Attieniti rigorosamente alle seguenti direttive:<br><br>
+          1. DESIGN SYSTEM E TIPOGRAFIA<br>
+          Crea un :root con le seguenti CSS Custom Properties per mantenere una palette colori elegante, ispirata alla natura e all'inchiostro:<br>
+          - Colori Base: Ivory (`#F8F1E4`, `#EDE5D5`) per i background caldi.<br>
+          - Colori Testo/Scuro: Deep Ink/Bosco (`#2A4B3C`, `#345948`) per contrasto, sfondi scuri e testi primari.<br>
+          - Colori Accento: Terra/Ambra Dorata (`#D49A47`) per call-to-action, hover, dettagli grafici e icone.<br>
+          - Bordi e Pietra: Toni desaturati (`#738574`, `#E4DACD`) per bordi leggeri e testi secondari.<br><br>
+          Importa due Google Fonts:<br>
+          - "Cormorant Garamond" (serif) per i titoli principali e i dettagli in corsivo (enfasi elegante).<br>
+          - "DM Sans" (sans-serif) per i testi dei paragrafi, i bottoni e i dati, garantendo massima leggibilità tecnica.<br><br>
+          2. COMPONENTI GLOBALI E LAYOUT<br>
+          - Utilizza un layout asimmetrico: gioca con le griglie (CSS Grid) dividendo spesso le sezioni in proporzioni come 5fr / 4fr.<br>
+          - Implementa un custom cursor (un puntino color ambra) che segue il mouse tramite JS.<br>
+          - La navigazione deve essere "sticky" in alto, con un effetto glassmorphism (backdrop-filter: blur), logo testuale a sinistra, link al centro e un bottone CTA a destra. Includi un menu hamburger per il mobile con animazione a comparsa full-screen.<br><br>
+          3. SEZIONI DEL SITO E CONTENUTI (Architettura)<br>
+          Costruisci le seguenti sezioni, ognuna con un identificativo univoco (es. `id="hero"`):<br>
+          1. **Hero Section:** Sfondo scuro (Ink). Layout diviso a metà. A sinistra un "eyebrow text" in maiuscoletto, un titolo gigante ("Ottimizzo processi. Guido team." con alcune parole in corsivo), una breve descrizione e bottoni per CV e Contatti. A destra, una foto profilo con un filtro seppia/scala di grigi che torna a colori al passaggio del mouse.<br>
+          2. **About (Chi sono):** Layout asimmetrico. A sinistra il testo introduttivo. A destra, implementa una griglia di statistiche circolari realizzate con SVG nativo (`&lt;circle&gt;`). Le barre circolari devono riempirsi animandosi via JS (Intersection Observer) e i numeri all'interno devono contare da 0 al valore finale (es. +20 persone, -60% tempi).<br>
+          3. **Esperienza:** Sfondo scuro. Un layout a "timeline" verticale. Ogni esperienza (es. FacolCup, Museo Stibbert) deve avere la data a sinistra e il contenuto a destra. Separa i punti salienti dell'esperienza con una lista strutturata (Team, Documenti, Relazioni, Processi). Aggiungi una galleria immagini e un box "Achievement" in basso.<br>
+          4. **Competenze (Skills):** Sfondo chiaro. A sinistra le Hard Skills con barre di progresso orizzontali che si estendono via JS allo scroll. A destra le Soft Skills, rappresentate da una griglia di card contenenti icone SVG minimali e testo.<br>
+          5. **Progetti & Tech:** Struttura a timeline simile all'Esperienza.<br>
+          - Per il progetto "AI Portfolio": Inserisci un box scuro che mostri visivamente un "System Prompt" simulato.<br>
+          - Per il progetto "Software/Java": Implementa uno slider di immagini orizzontale perfettamente funzionante in puro JS (con frecce di navigazione prev/next).<br>
+          - Per il progetto "Business Case (Chinéo)": Crea dei componenti UI nativi in CSS Grid per mostrare una SWOT Analysis (4 quadranti) e un Lean Canvas (griglia a 5 colonne e 2 righe). Devono sembrare report gestionali integrati nel sito.<br>
+          6. **Formazione:** Card interattive per le università. La card della laurea in corso deve essere espandibile (accordion click via JS) per mostrare l'elenco degli esami divisi per anni accademici.<br>
+          7. **Viaggi:** Una griglia divisa in "Visitati" e "Wishlist" con le relative bandiere emoji. Aggiungi un'animazione complessa: un enorme aereo in SVG che, allo scroll, scorre da sinistra a destra rivelando i contenuti nascosti sotto una "tenda" (curtain effect).<br>
+          8. **Contatti & Footer:** Sezione finale molto pulita, sfondi scuri, testo grande d'impatto "Parliamoci.", e pulsanti sagomati per Email e LinkedIn.<br><br>
+          4. ANIMAZIONI E JAVASCRIPT LOGIC<br>
+          - **Scroll Reveals:** Usa le API di `IntersectionObserver` per far apparire le sezioni sfumando dal basso verso l'alto (`fadeUp`) in modo scaglionato (`delay`).<br>
+          - **Contatori e Grafici:** Scrivi logica JS personalizzata per animare l'attributo `stroke-dashoffset` negli SVG circolari e un `setInterval` per l'animazione incrementale dei numeri.<br>
+          - **Slider:** Logica per scorrere l'overflow-x orizzontale al click delle frecce.<br>
+          - **Navigazione:** Aggiornamento del link attivo nella nav bar basato sulla posizione dello scroll.<br><br>
+          5. VINCOLI TECNICI FINALI<br>
+          - CSS rigorosamente nel tag `&lt;style&gt;`, JS nel tag `&lt;script&gt;` in fondo al file.<br>
+          - Il design deve essere perfettamente "Mobile First" / Responsive tramite Media Queries, collassando le griglie in una singola colonna e attivando il menu hamburger su schermi inferiori a 900px.<br>
+          - Scrivi codice pulito, altamente commentato e pronto per la produzione. Massima attenzione ai dettagli micro-interattivi (hover states sui bottoni, transizioni dolci)."
+        </div>
+        <p class="prompt-note">
+          <em>Nota sul processo:</em> A seguito di questo prompt iniziale (ottimizzato a sua volta tramite IA), ho adottato un approccio iterativo guidato dall'umano. Ho perfezionato l'architettura, integrato i testi definitivi e curato ogni singolo dettaglio, conducendo test continui su palette colori e stili tipografici fino al raggiungimento del perfetto equilibrio visivo.
+        </p>
+        <div class="ai-tools">
+          <span class="ai-tag">Gemini 3.1 Pro Esteso</span>
+          <span class="ai-tag">Claude Sonnet 4.6 Adattivo </span>
+          <span class="ai-tag">ChatGPT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPAZIO PROGETTO: HACKATHON & CERTIFICAZIONE -->
+  <div class="proj-entry reveal reveal-delay-1">
+    <div class="proj-meta">
+      <div class="proj-period">Maggio 2026</div>
+      <div class="proj-org">Progetto ALMA & Unifi</div>
+      <div class="proj-badge">Hackathon & Certificazione</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-role">Team Member & AI Analyst</div>
+      <p class="proj-desc">
+        Partecipazione all'hackathon <em>"StudIAre con l'IA. Dalle scorciatoie all'uso critico"</em> presso il Palazzo degli Affari di Firenze e completamento del percorso formativo certificato sull'Intelligenza Artificiale.
+      </p>
+      <ul class="proj-items">
+        <li>
+          <strong>Hackathon & Concept</strong>
+          Ideazione e progettazione in team di due artefatti digitali per l'integrazione nella campagna di sensibilizzazione ufficiale dell'Ateneo sull'uso etico e critico dell'IA sia nel contesto accademico che lavorativo e personale.
+        </li>
+        <li>
+          <strong>Certificazione ALMA</strong>
+          <a href="attestato-1.png" target="_blank" rel="noopener noreferrer" class="cert-img-wrapper" aria-label="Visualizza attestato ingrandito">
+            <img src="attestato-1.png" alt="Attestato Certificazione ALMA">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- SPAZIO PROGETTO: INGEGNERIA DEL SOFTWARE -->
+  <div class="proj-entry reveal reveal-delay-2">
+    <div class="proj-meta">
+      <div class="proj-period">2025</div>
+      <div class="proj-org">Progetto Software</div>
+      <div class="proj-badge">Java / UML</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-role">Sviluppatore & Analista di Sistema</div>
+      <p class="proj-desc">
+        Progetto di gruppo sviluppato nell'ambito del corso di Software Engineering, incentrato sulla progettazione di un sistema software per la gestione delle visite guidate di un museo.
+Il sistema consente la gestione di visite, sale, guide turistiche, prenotazioni e pagamenti online, con accesso differenziato per visitatori, guide e operatori museali, garantendo requisiti di sicurezza, scalabilità e affidabilità.
+      </p>
+      <ul class="proj-items">
+        <li>
+          <strong>Modellazione</strong>
+        Il lavoro ha incluso la definizione del modello concettuale del dominio, la raccolta e formalizzazione dei requisiti funzionali e non funzionali, la modellazione dei casi d'uso e la progettazione del diagramma delle classi.
+        </li>
+        <li>
+          <strong>Sviluppo</strong>
+          Scrittura del codice in Java applicando i principi dell'Object-Oriented Programming (OOP), UML (use case diagram, class diagram), analisi dei requisiti.
+        </li>
+      </ul>
+      
+      <div class="proj-slider-wrapper">
+        <button class="slider-arrow prev" onclick="scrollSlider(-1)" aria-label="Immagine precedente">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
+        </button>
+        
+        <div class="proj-slider-track" id="software-slider-track">
+          <div class="proj-slider-slide">
+            <img src="modello concettuale.png" alt="Modello Concettuale UML" class="proj-img">
+          </div>
+          <div class="proj-slider-slide">
+            <img src="class diagram.png" alt="Class Diagram UML" class="proj-img">
+          </div>
+          <div class="proj-slider-slide">
+            <img src="use case.png" alt="Use Case Diagram UML" class="proj-img">
+          </div>
+        </div>
+
+        <button class="slider-arrow next" onclick="scrollSlider(1)" aria-label="Immagine successiva">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12l4-4-4-4"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SPAZIO PROGETTO: ARDUINO -->
+  <div class="proj-entry reveal reveal-delay-3">
+    <div class="proj-meta">
+      <div class="proj-period">2024</div>
+      <div class="proj-org">Progetto Arduino</div>
+      <div class="proj-badge">C++ / Hardware</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-role">Progettista Hardware e Firmware</div>
+      <p class="proj-desc">
+        Sviluppo di un sistema di rilevamento incendi basato su microcontrollore ESP32 WROOM-32, integrando la progettazione del circuito elettronico con la stesura del firmware per l'acquisizione dei dati sensoriali, l'elaborazione in tempo reale e la gestione delle risposte di allarme.
+      </p>
+      <ul class="proj-items">
+        <li>
+          <strong>Hardware</strong>
+          Progettazione dello schema elettrico e assemblaggio fisico del circuito, comprendente: un sensore di fiamma KY-026 IR 760–1100 nm per il rilevamento ottico delle fiamme, un LED rosso per l'allarme ottico e un buzzer piezoelettrico passivo come attuatore acustico di allarme. L'unità di controllo centrale è una scheda ESP32 WROOM-32 con connettività Wi-Fi integrata.
+        </li>
+        <li>
+          <strong>Software</strong>
+         Programmazione del microcontrollore ESP32 in linguaggio C++ tramite Arduino IDE per la lettura degli input digitali e analogici dai sensori, l'implementazione della logica di soglia per il rilevamento eventi, il controllo PWM del buzzer di allarme e la trasmissione dei dati via Wi-Fi a Firebase Realtime Database, con visualizzazione delle notifiche di allarme in tempo reale su una pagina web HTML collegata al database.
+        </li>
+      </ul>
+      <div class="proj-image-gallery">
+        <img src="arduino_schema.png" alt="Schema Hardware Arduino" class="proj-img">
+      </div>
+    </div>
+  </div>
+
+  <div class="proj-entry reveal reveal-delay-4">
+    <div class="proj-meta">
+      <div class="proj-period">Nov 2024 — Dic 2024</div>
+      <div class="proj-org">Chinéo</div>
+      <div class="proj-badge">Business case accademico</div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-role">Chinéo — L'onda verde che salva vite.</div>
+      <p class="proj-desc">
+        <strong>Business Plan per una startup simulata in ambito Smart Mobility e IoT.</strong><br><br>
+        In sintesi: Un algoritmo predittivo integrato con i sistemi semaforici urbani e le centrali del 118 per azzerare il traffico di fronte ai mezzi di soccorso, riducendo i tempi di intervento.
+      </p>
+      
+      <!-- Accordion Espandibile per il Report di Chinéo -->
+      <div class="chineo-report expandable" onclick="this.classList.toggle('expanded')">
+        <div class="chineo-report-header">
+          <span>Vedi estratto Business Plan (SWOT & Lean Canvas)</span>
+          <svg class="chineo-expand-icon" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6L8 10L12 6"/>
+          </svg>
+        </div>
+        <div class="chineo-report-content">
+          <div class="chineo-report-inner">
+            <div class="chineo-report-body">
+              
+              <div class="chineo-ps-grid">
+                <div>
+                  <div class="chineo-label">Il Problema</div>
+                  <div class="chineo-text">I tempi medi di arrivo di un'ambulanza in Italia variano tra 16 e 28 minuti a causa del traffico urbano.</div>
+                </div>
+                <div>
+                  <div class="chineo-label">La Soluzione</div>
+                  <div class="chineo-text">Un software (attualmente a TRL 4) che elabora i dati GPS del mezzo e i sensori IoT urbani per creare un "canale verde" dinamico, garantendo sicurezza e velocità.</div>
+                </div>
+              </div>
+
+              <ul class="proj-items" style="margin-bottom: 24px; border-bottom: none;">
+                <li>
+                  <strong>Business Modeling</strong>
+                  Sviluppo del Lean Canvas e SWOT Analysis (consultabili di seguito).
+                </li>
+                <li>
+                  <strong>Pianificazione Finanziaria</strong>
+                  Costruzione del piano costi/ricavi a 3 anni e calcolo del Break Even Point (raggiunto alla 21esima mensilità).
+                </li>
+              </ul>
+
+              <div class="chineo-diagrams">
+                
+                <div class="diagram-wrapper">
+                  <div class="diagram-title">SWOT Analysis</div>
+                  <div class="swot-grid">
+                    <div class="swot-cell">
+                      <div class="swot-letter">S</div>
+                      <div class="swot-cell-text">
+                        <strong>Strengths:</strong>
+                        <ul>
+                          <li>Software già parzialmente sviluppato con minimi costi</li>
+                          <li>Bassi costi di mantenimento post implementazione</li>
+                          <li>Accordi maturati con l'Area Metropolitana di Firenze</li>
+                          <li>Tecnologia all'avanguardia adattabile ad ogni area urbana</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="swot-cell">
+                      <div class="swot-letter">W</div>
+                      <div class="swot-cell-text">
+                        <strong>Weaknesses:</strong>
+                        <ul>
+                          <li>Business non indipendente</li>
+                          <li>Assenza di revenue streams alternative</li>
+                          <li>Team imprenditoriale inesperto</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="swot-cell">
+                      <div class="swot-letter">O</div>
+                      <div class="swot-cell-text">
+                        <strong>Opportunities:</strong>
+                        <ul>
+                          <li>Alte barriere in ingresso per possibili entranti</li>
+                          <li>Pochi competitors esistenti</li>
+                          <li>In linea con le tematiche di Sicurezza Stradale europee</li>
+                          <li>Espandibile in tutta la Regione Toscana e in altre grandi aree urbane</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="swot-cell">
+                      <div class="swot-letter">T</div>
+                      <div class="swot-cell-text">
+                        <strong>Threats:</strong>
+                        <ul>
+                          <li>Efficientamento del Trasporto Pubblico Locale (TPL), minori problemi nel futuro</li>
+                          <li>Potere contrattuale dei clienti</li>
+                          <li>Potenziale espansione di competitori già istituiti oltre oceano</li>
+                          <li>Alternative di velocizzazione del primo soccorso</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="diagram-wrapper">
+                  <div class="diagram-title">Lean Canvas</div>
+                  <div class="lean-canvas">
+                    <div class="lc-box lc-tall">
+                      <div class="lc-title">Problem</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Rallentamento dei mezzi di soccorso, per congestione delle strade</li>
+                          <li>Scarsa sicurezza in situazioni di soccorso stradale</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box">
+                      <div class="lc-title">Solution</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Ottimizzazione delle tempistiche di soccorso</li>
+                          <li>Cambiamento on-time della segnaletica verticale</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box lc-tall">
+                      <div class="lc-title">Value Proposition</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Prestazione: migliorare i tempi di trasporto dei mezzi</li>
+                          <li>Risk Reduction: diminuire il rischio di morti in ambulanza</li>
+                          <li>Personalizzazione implementazione specifica per area</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box">
+                      <div class="lc-title">Unfair Advantage</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Software informatico innovativo</li>
+                          <li>Partnership con l'amministrazione pubblica</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box lc-tall">
+                      <div class="lc-title">Customer Segments</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Amministrazione pubblica</li>
+                          <li>Assessorati alla mobilità</li>
+                          <li><em>Early Adopters:</em> Area Metropolitana di Firenze</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box">
+                      <div class="lc-title">Key Metrics</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Tempo di pre-ospedalizzazione (LEA)</li>
+                          <li>Numero di siti implementati</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box">
+                      <div class="lc-title">Channels</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Public relations e modelli di simulazione</li>
+                          <li>Partenariato pubblico privato (PPP)</li>
+                          <li>Assistenza post-vendita</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="lean-canvas-bottom">
+                    <div class="lc-box">
+                      <div class="lc-title">Cost Structure</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Stipendi e Consulenza legali</li>
+                          <li>Costi di sviluppo e mantenimento del software</li>
+                          <li>Costi di relazione pubblica</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="lc-box">
+                      <div class="lc-title">Revenue Streams</div>
+                      <div class="lc-content">
+                        <ul>
+                          <li>Ricavi fissi sull'impiego del sistema</li>
+                          <li>Ricavi variabili proporzionali al tempo risparmiato (miglioramento LEA)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fine Accordion Espandibile -->
+
+      <!-- Riquadro Dichiarazione Etica IA (estratto da pagina 2 del PDF) -->
+      <div class="prompt-box" style="margin-top: 24px;">
+        <div class="prompt-header">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          Impiego Etico dell'Intelligenza Artificiale
+        </div>
+        <div class="prompt-code" style="max-height: none;">
+          "Questa relazione è stata interamente prodotta dai sottoscritti autori, tramite ricerca, selezione, discussione e interpretazione di informazioni inerenti il contesto competitivo, i risultati, le strategie e i modelli di business del caso di studio assegnato. [...] Il lavoro è conforme ai principi di integrità accademica sull'utilizzo degli strumenti di Intelligenza Artificiale, e in particolare dei linguaggi generativi LLM."
+        </div>
+        <div class="prompt-note">
+          <strong>Applicazioni specifiche nel progetto (via ChatGPT):</strong>
+          <ul style="padding-left: 16px; margin-top: 6px; list-style-type: disc;">
+            <li>Suggerire idee e modalità di approfondimento, fornire esempi specifici o generici;</li>
+            <li>Facilitare ricerca e identificazione di materiale di analisi;</li>
+            <li>Indicare errori grammaticali e ortografici e opportunità di miglioramento semantico e lessicale.</li>
+          </ul>
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tag">ChatGPT</span>
+          <span class="ai-tag">Integrità Accademica</span>
+          <span class="ai-tag">Ricerca & Analisi</span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ── Education ── -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-num">05 — Formazione</div>
+    <h2 class="section-title">Le <em>radici</em></h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card expandable reveal" onclick="this.classList.toggle('expanded')">
+      <div class="edu-period">2022 — Ottobre 2026 (atteso)</div>
+      <div class="edu-degree">Laurea Triennale in Ingegneria Gestionale</div>
+      <div class="edu-spec">Specializzazione IT</div>
+      <div class="edu-inst">Università degli Studi di Firenze</div>
+      
+      <div class="edu-expand-toggle">
+        Vedi piano di studi
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="edu-exams">
+        <div class="edu-exams-inner">
+          <div class="edu-exams-content">
+            <div class="edu-year-title">Primo Anno</div>
+            <ul class="edu-exams-list">
+              <li>Economia e Organizzazione Aziendale</li>
+              <li>Tecnologia dei Materiali e Chimica Applicata</li>
+              <li>Fisica Generale</li>
+              <li>Chimica</li>
+              <li>Geometria</li>
+              <li>Analisi Matematica</li>
+              <li>Fondamenti di Informatica (Python)</li>
+            </ul>
+            
+            <div class="edu-year-title">Secondo Anno</div>
+            <ul class="edu-exams-list">
+              <li>Meccanica Razionale</li>
+              <li>Tecnologie e Studi di Fabbricazione</li>
+              <li>Statistica Industriale</li>
+              <li>Sistemi Energetici</li>
+              <li>Fisica Tecnica Industriale</li>
+              <li>Principi di Ingegneria Elettrica</li>
+              <li>Ingegneria del Software (Java, UML)</li>
+              <li>Reti Dati per Applicazioni Industriali (C++, Arduino IDE, HTML)</li>
+              <li>Basi di Dati (SQL, PostgreSQL)</li>
+            </ul>
+            
+            <div class="edu-year-title">Terzo Anno</div>
+            <ul class="edu-exams-list">
+              <li>Strategia di Impresa</li>
+              <li>Gestione della Qualità e Sistemi di Gestione Ambientale</li>
+              <li>Gestione della Produzione Industriale</li>
+              <li>Impianti e Logistica Industriale</li>
+              <li>Laboratorio di Processi Aziendali</li>
+              <li>Fondamenti di Ricerca Operativa</li>
+              <li>Economia dell'Impresa</li>
+              <li>Geografia dell'Impresa</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-period">2017 — 2022</div>
+      <div class="edu-degree">Diploma Scientifico</div>
+      <div class="edu-spec">Liceo Scientifico Ordinario</div>
+      <div class="edu-inst">Liceo Scientifico Guido Castelnuovo, Firenze</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Travel ── -->
+<section id="travel">
+  <div class="section-header reveal">
+    <div class="section-num">06 — I miei viaggi</div>
+    <h2 class="section-title">Oltre i <em>confini</em></h2>
+  </div>
+  
+  <!-- Contenitore dell'animazione aereo -->
+  <div class="travel-reveal-container reveal reveal-delay-1">
+    
+    <!-- La linea tratteggiata sfuma e scompare dopo che l'aereo fa la sua passata -->
+    <div class="travel-path-line"></div>
+    
+    <!-- La vera e propria griglia nascosta dietro al sipario -->
+    <div class="travel-grid">
+      <!-- Colonna 1: Visitati -->
+      <div class="travel-col">
+        <h3 class="travel-col-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Paesi Visitati
+        </h3>
+        <ul class="travel-list">
+          <li class="travel-item"><span class="travel-flag">🇦🇹</span> Austria</li>
+          <li class="travel-item"><span class="travel-flag">🇧🇬</span> Bulgaria</li>
+          <li class="travel-item"><span class="travel-flag">🇻🇦</span> Città del Vaticano</li>
+          <li class="travel-item"><span class="travel-flag">🇫🇷</span> Francia</li>
+          <li class="travel-item"><span class="travel-flag">🇬🇷</span> Grecia</li>
+          <li class="travel-item"><span class="travel-flag">🇮🇹</span> Italia</li>
+          <li class="travel-item"><span class="travel-flag">🇳🇱</span> Paesi Bassi</li>
+          <li class="travel-item"><span class="travel-flag">🇵🇱</span> Polonia</li>
+          <li class="travel-item"><span class="travel-flag">🇬🇧</span> Regno Unito</li>
+          <li class="travel-item"><span class="travel-flag">🇷🇸</span> Serbia</li>
+          <li class="travel-item"><span class="travel-flag">🇪🇸</span> Spagna</li>
+        </ul>
+      </div>
+
+      <!-- Colonna 2: Wishlist -->
+      <div class="travel-col">
+        <h3 class="travel-col-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Wishlist
+        </h3>
+        <ul class="travel-list">
+          <li class="travel-item"><span class="travel-flag">🇦🇺</span> Australia</li>
+          <li class="travel-item"><span class="travel-flag">🇨🇦</span> Canada</li>
+          <li class="travel-item"><span class="travel-flag">🇩🇰</span> Danimarca</li>
+          <li class="travel-item"><span class="travel-flag">🇯🇵</span> Giappone</li>
+          <li class="travel-item"><span class="travel-flag">🇮🇸</span> Islanda</li>
+          <li class="travel-item"><span class="travel-flag">🇳🇴</span> Norvegia</li>
+          <li class="travel-item"><span class="travel-flag">🇺🇸</span> Stati Uniti</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Sipario e aereo -->
+    <div class="travel-curtain">
+      <div class="airplane-wrapper">
+        <!-- L'aereo ora è gigantesco: 400x400 -->
+        <svg width="400" height="400" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(90deg);">
+          <path d="M21,16V14L13,9V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V9L2,14V16L10,13.5V19L8,20.5V22L11.5,21L15,22V20.5L13,19V13.5L21,16Z"/>
+        </svg>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="section-num">07 — Contatti</div>
+  <h2 class="section-title">Parliamoci.</h2>
+  <p class="contact-sub">
+   Disponibile per stage, part-time o semplicemente per una conversazione su processi, tecnologia e management.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:pietrogmcalderoni@gmail.com" class="contact-link primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 5l6.5 5 6.5-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      pietrogmcalderoni@gmail.com
+    </a>
+    <a href="https://linkedin.com/in/pietrogmcalderoni" target="_blank" rel="noopener noreferrer" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 6.5V11M5 4.5V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 11V8.5c0-1.1.9-2 2-2s2 .9 2 2V11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 6.5V11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/piecalde" target="_blank" rel="noopener noreferrer" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      GitHub
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2026 Pietro G. M. Calderoni — Firenze, Italia</p>
+</footer>
+
+<script>
+  // Cursor dot — solo su dispositivi con mouse (non touch)
+  const cursor = document.getElementById('cursor');
+  if (!matchMedia('(pointer: fine)').matches) {
+    cursor.style.display = 'none';
+  } else {
+    document.addEventListener('mousemove', e => {
+      cursor.style.opacity = '1';
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+  }
+
+  // Intersection observer for reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Skill bars
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-bar').forEach(bar => bar.classList.add('visible'));
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-grid').forEach(el => barObserver.observe(el));
+
+  // Nav active state on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--terra)' : '';
+    });
+  }, { passive: true });
+
+  // Nav Logo fade in/out observer
+  const heroName = document.getElementById('hero-name');
+  const navLogo = document.getElementById('nav-logo');
+  if (heroName && navLogo) {
+    const logoObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLogo.classList.remove('visible'); 
+        } else {
+          navLogo.classList.add('visible'); 
+        }
+      });
+    }, { rootMargin: "-60px 0px 0px 0px" }); 
+    logoObserver.observe(heroName);
+  }
+  
+  // Mobile Hamburger Menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    
+    // Blocco o sblocco scroll del body
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    
+    // Anima l'icona dell'hamburger (trasformazione da righe a 'X')
+    const icon = hamburger.querySelector('path');
+    if(mobileMenu.classList.contains('active')){
+      icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+    } else {
+      icon.setAttribute('d', 'M4 7h16M4 12h16M4 17h16');
+    }
+  });
+
+  // Chiude il menu quando si clicca un link su mobile
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = ''; // Ripristina lo scroll
+      hamburger.querySelector('path').setAttribute('d', 'M4 7h16M4 12h16M4 17h16');
+    });
+  });
+
+  // Circular Stats Animation
+  const circObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const stats = e.target.querySelectorAll('.circle-stat');
+        stats.forEach((stat, index) => {
+          setTimeout(() => {
+            // Animazione anello
+            const circle = stat.querySelector('.circle-progress');
+            const pct = circle.getAttribute('data-pct');
+            const circumference = 290; 
+            circle.style.strokeDashoffset = circumference - (pct / 100) * circumference;
+
+            // Animazione numeri
+            const numEl = stat.querySelector('.circle-num');
+            const targetVal = parseFloat(numEl.getAttribute('data-val'));
+            const isFloat = numEl.getAttribute('data-val').includes('.');
+            const prefix = numEl.getAttribute('data-prefix') || '';
+            const suffix = numEl.getAttribute('data-suffix') || '';
+            
+            let current = 0;
+            const duration = 1500;
+            const stepTime = 20;
+            const steps = duration / stepTime;
+            const increment = targetVal / steps;
+
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= targetVal) {
+                current = targetVal;
+                clearInterval(timer);
+              }
+              numEl.textContent = prefix + (isFloat ? current.toFixed(1) : Math.round(current)) + suffix;
+            }, stepTime);
+            
+          }, index * 150); 
+        });
+        circObserver.unobserve(e.target); 
+      }
+    });
+  }, { threshold: 0.3 });
+  
+  const circGrid = document.querySelector('.circular-stats-grid');
+  if (circGrid) circObserver.observe(circGrid);
+
+  // Script per far scorrere lo slider immagini
+  window.scrollSlider = function(direction) {
+    const track = document.getElementById('software-slider-track');
+    if (track) {
+      const slideWidth = track.clientWidth;
+      track.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+    }
+  };
+</script>
+</body>
+</html>
